@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace Myfirstrepository.Pages
 
             // Input descripton into Description box
             IWebElement descriptionTextbox = driver.FindElement(By.Id("Description"));
-            descriptionTextbox.SendKeys("First Repository");
+            descriptionTextbox.SendKeys("First Repo");
 
             // Input Price per unit into price per unit textbox
             IWebElement priceTextbox = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
@@ -48,25 +49,42 @@ namespace Myfirstrepository.Pages
             Thread.Sleep(5000);
 
             IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            IWebElement newDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
 
-            if (newCode.Text == "First Repository")
-            {
-                Console.WriteLine("New Time reocrd created successfully");
-            }
-            else
-            {
-                Console.WriteLine("Record hasn't been created");
-            }
+            Assert.That(newCode.Text == "First Repository", "Actual code and expected code do not match. ");
+            Assert.That(newDescription.Text == "First Repo", "Actual description and expected description do not match. ");
+
+            //if (newCode.Text == "First Repository")
+            //{
+            //    Assert.Pass("New Time record created successfully!");
+            //}
+            //else
+            //{
+            //    Assert.Fail("Record hasn't been created");
+            //}
         }
 
         public void EditTM(IWebDriver driver)
         {
             // Click on edit button to edit record
 
-            IWebElement editButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
-            editButton.Click();
+            Thread.Sleep(1000);
+            IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+            goToLastPageButton.Click();
 
+            IWebElement recordToBeEdited = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 
+            if (recordToBeEdited.Text == "First Repository")
+            {
+                IWebElement lastRecordEdit = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
+                lastRecordEdit.Click();
+            }
+            else 
+            {
+                Assert.Fail("Record to be edited not found");
+            }
+               
+                 
             // Enter new record in Price field
 
             IWebElement codeTextBox = driver.FindElement(By.Id("Code"));
@@ -90,6 +108,8 @@ namespace Myfirstrepository.Pages
 
             IWebElement editedCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 
+            
+
             if (editedCode.Text == "MyFirstRepository1.0")
             {
                 Console.WriteLine("Record is edited successfully");
@@ -104,26 +124,44 @@ namespace Myfirstrepository.Pages
 
         public void DeleteTM(IWebDriver driver)
         {
+
+            Thread.Sleep(1000);
+            driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span")).Click();
+
+            IWebElement recordToBeDeleted = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+
+            if (recordToBeDeleted.Text == "MyFirstRepository1.0")
+            {
+                IWebElement deleteButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+                deleteButton.Click();   
+            }
+            else
+            {
+                Assert.Fail("Record to be deleted not found. ");
+            }
+
             //Click on Delete button 
             IWebElement deletebtn = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
             deletebtn.Click();
             Thread.Sleep(6000);
 
             // Click on OK button on popup box
-            IAlert al = driver.SwitchTo().Alert();
-            al.Accept();
-            Thread.Sleep(4000);
-
+            driver.SwitchTo().Alert().Accept();
 
             IWebElement deleterecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            if (deleterecord.Text == "First Repository 1.0")
-            {
-                Console.WriteLine("Record has not been deleted successfully");
-            }
-            else
-            {
-                Console.WriteLine("Record is deleted successfully");
-            }
+
+
+            Assert.That(deleterecord.Text != "First Repository 1.0", "Record hasn't been deleted");
+
+
+            //if (deleterecord.Text == "First Repository 1.0")
+            //{
+            //    Console.WriteLine("Record has not been deleted successfully");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Record is deleted successfully");
+            //}
         }
     }
 }
