@@ -15,25 +15,15 @@ namespace Myfirstrepository.Tests
     [Parallelizable]
     public class Employees_Tests : CommonDriver 
     {
-        [SetUp]
-
-        public void LoginSteps()
-        {
-            driver = new ChromeDriver("E:/Myfirstrepository");
-
-            // Login page object initialization and defination
-            LoginPage loginPageObj = new LoginPage();
-            loginPageObj.LoginActions(driver);
-
-            // Home page object initialization and defination
-            HomePage homePageObj = new HomePage();
-            homePageObj.GoToEmployeesPage(driver);
-        }
+        // Page objects initialization
+        EmployeePage employeePageObj = new EmployeePage();
+        HomePage homePageObj = new HomePage();
+  
 
         [Test, Order(1)]
         public void CreateEmployeeTest()
         {
-            EmployeePage employeePageObj = new EmployeePage();
+            homePageObj.GoToEmployeesPage(driver);
             employeePageObj.CreateEmployee(driver);
         }
 
@@ -41,7 +31,7 @@ namespace Myfirstrepository.Tests
 
         public void EditEmployeeTest()
         {
-            EmployeePage employeePageObj = new EmployeePage();
+            homePageObj.GoToEmployeesPage(driver);
             employeePageObj.EditEmployee(driver);
         }
 
@@ -49,17 +39,8 @@ namespace Myfirstrepository.Tests
 
         public void DeleteEmployeeTest()
         {
-            EmployeePage employeePageObl = new EmployeePage();
-            employeePageObl.DeleteEmployee(driver);
+            homePageObj.GoToEmployeesPage(driver);
+            employeePageObj.DeleteEmployee(driver);
         }
-
-        [TearDown]
-
-        public void ClosingSteps()
-        {
-            DriverCommand.Quit();
-        }
-
-
     }
 }
