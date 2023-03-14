@@ -26,5 +26,10 @@ namespace Myfirstrepository.Pages
             tmOption.Click();
             Thread.Sleep(2000);
         }
+
+        public void GoToEmployeesPage(IWebDriver driver) 
+        {
+
+        }
     }
 }
