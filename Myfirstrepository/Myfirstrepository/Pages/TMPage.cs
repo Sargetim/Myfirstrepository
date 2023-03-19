@@ -17,26 +17,25 @@ namespace Myfirstrepository.Pages
             createNewButton.Click();
             Thread.Sleep(1000);
 
-
             // Select Time option from TypeCode dropdown list
             IWebElement typeCodeDropdown = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[1]/div/span[1]/span/span[2]/span"));
             typeCodeDropdown.Click();
-            Thread.Sleep(6000);
+            Thread.Sleep(1000);
 
             IWebElement timeOption = driver.FindElement(By.XPath("//*[@id=\"TypeCode_listbox\"]/li[2]"));
             timeOption.Click();
 
-            // input code into Code textbook
+            // Input code into Code textbox
             IWebElement codeTextbox = driver.FindElement(By.Id("Code"));
             codeTextbox.SendKeys("First Repository");
 
-            // Input descripton into Description box
+            // Input description into Description textbox
             IWebElement descriptionTextbox = driver.FindElement(By.Id("Description"));
             descriptionTextbox.SendKeys("First Repo");
 
-            // Input Price per unit into price per unit textbox
+            // Input Price per Unit into price per unit textbox
             IWebElement priceTextbox = driver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
-            priceTextbox.SendKeys("12345");
+            priceTextbox.SendKeys("18");
 
             // Click on save button
             IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
@@ -51,8 +50,9 @@ namespace Myfirstrepository.Pages
             IWebElement newCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
             IWebElement newDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
 
-            Assert.That(newCode.Text == "First Repository", "Actual code and expected code do not match. ");
-            Assert.That(newDescription.Text == "First Repo", "Actual description and expected description do not match. ");
+            Assert.That(newCode.Text == "First Repository", "Actual code and expected code do not match.");
+            Assert.That(newDescription.Text == "First Repo", " Actual description and expected description do not match.");
+
 
             //if (newCode.Text == "First Repository")
             //{
@@ -60,114 +60,84 @@ namespace Myfirstrepository.Pages
             //}
             //else
             //{
-            //    Assert.Fail("Record hasn't been created");
+            //    Assert.Fail("Record hasn't been created!");
             //}
         }
 
         public void EditTM(IWebDriver driver)
         {
-            // Click on edit button to edit record
 
+            // Click on Edit Buttonto make changes to type Code
             Thread.Sleep(1000);
-            IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+            IWebElement goToLastPageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]"));
             goToLastPageButton.Click();
 
-            IWebElement recordToBeEdited = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            IWebElement recordToBeEdited = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/div[2]/table/tbody/tr[last()]/td[1]"));
 
             if (recordToBeEdited.Text == "First Repository")
             {
-                IWebElement lastRecordEdit = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
-                lastRecordEdit.Click();
-            }
-            else 
-            {
-                Assert.Fail("Record to be edited not found");
-            }
-               
-                 
-            // Enter new record in Price field
 
-            IWebElement codeTextBox = driver.FindElement(By.Id("Code"));
-            codeTextBox.Clear();
-            codeTextBox.SendKeys("MyFirstRepository1.0");
-
-            //Click on save button after editing record
-            IWebElement editsavebtn = driver.FindElement(By.Id("SaveButton"));
-            editsavebtn.Click();
-            Thread.Sleep(6000);
-
-
-
-            // Go to last page after editing record
-
-            IWebElement GoToLastPage1 = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
-            GoToLastPage1.Click();
-            Thread.Sleep(5000);
-
-
-
-            IWebElement editedCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-
-            
-
-            if (editedCode.Text == "MyFirstRepository1.0")
-            {
-                Console.WriteLine("Record is edited successfully");
+                IWebElement LastRecordEdit = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
+                LastRecordEdit.Click();
             }
             else
             {
-                Console.WriteLine("Record not Editted");
+                Assert.Fail("Record to be edited not found.");
             }
+
+
+            //Identify Code Text Box and clear last record
+            driver.FindElement(By.XPath("//*[@id=\"Code\"]")).Clear();
+
+
+            //Identify Code Text Box and Write New Record
+            IWebElement CodeTextBox = driver.FindElement(By.XPath("//*[@id=\"Code\"]"));
+            CodeTextBox.SendKeys("MyFirstRepository1.0");
+
+
+            //Identify and Click on Save Button
+            IWebElement SaveButton = driver.FindElement(By.Id("SaveButton"));
+            SaveButton.Click();
+
+
+            //Identify and Click on Last Page Button Page
+            Thread.Sleep(1000);
+            driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]")).Click();
+            Thread.Sleep(1000);
+            IWebElement lastEditedRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+
+            Assert.That(lastEditedRecord.Text == "123456", "Record hasn't been edited.");
+
         }
-
-
 
         public void DeleteTM(IWebDriver driver)
         {
-
+            //Identify and Click on Last Page Button Page
             Thread.Sleep(1000);
             driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span")).Click();
 
-            IWebElement recordToBeDeleted = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+            IWebElement recordToBeDeleted = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/div[2]/table/tbody/tr[last()]/td[1]"));
 
             if (recordToBeDeleted.Text == "MyFirstRepository1.0")
             {
-                IWebElement deleteButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-                deleteButton.Click();   
+                //Find and click on delete button for last record
+                IWebElement deleteButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/div[2]/table/tbody/tr[last()]/td[5]/a[2]"));
+                deleteButton.Click();
             }
             else
             {
-                Assert.Fail("Record to be deleted not found. ");
+                Assert.Fail("Record to be deleted not found.");
             }
 
-            //Click on Delete button 
-            IWebElement deletebtn = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
-            deletebtn.Click();
-            Thread.Sleep(6000);
+            IWebElement lastRecordDelete = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
+            lastRecordDelete.Click();
+            Thread.Sleep(2000);
 
-            // Click on OK button on popup box
+            //Acceptance on Pop up to delete record
             driver.SwitchTo().Alert().Accept();
 
-            IWebElement deleterecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-
-
-            Assert.That(deleterecord.Text != "First Repository 1.0", "Record hasn't been deleted");
-
-
-            //if (deleterecord.Text == "First Repository 1.0")
-            //{
-            //    Console.WriteLine("Record has not been deleted successfully");
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Record is deleted successfully");
-            //}
+            Assert.That(lastRecordDelete.Text != "MyFirstRepository1.0", "Record hasn't been deleted");
         }
     }
+
 }
-
-    
-
-    
-       
-         

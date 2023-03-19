@@ -1,7 +1,6 @@
 ﻿using Myfirstrepository.Pages;
 using Myfirstrepository.Utilities;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
@@ -13,34 +12,34 @@ namespace Myfirstrepository.Tests
 {
     [TestFixture]
     [Parallelizable]
-    public class Employees_Tests : CommonDriver 
+    public class Employees_Tests : CommonDriver
     {
         // Page objects initialization
         EmployeePage employeePageObj = new EmployeePage();
-        HomePage homePageObj = new HomePage();
-  
+        HomePage homePageobj = new HomePage();
 
-        [Test, Order(1)]
+
+        [Test]
         public void CreateEmployeeTest()
         {
-            homePageObj.GoToEmployeesPage(driver);
+            homePageobj.GoToEmployeesPage(driver);
             employeePageObj.CreateEmployee(driver);
         }
 
-        [Test, Order(2)]
-
+        [Test]
         public void EditEmployeeTest()
         {
-            homePageObj.GoToEmployeesPage(driver);
+            homePageobj.GoToEmployeesPage(driver);
             employeePageObj.EditEmployee(driver);
         }
 
-        [Test, Order(3)]
-
+        [Test]
         public void DeleteEmployeeTest()
         {
-            homePageObj.GoToEmployeesPage(driver);
+            homePageobj.GoToEmployeesPage(driver);
             employeePageObj.DeleteEmployee(driver);
         }
+
+
     }
 }

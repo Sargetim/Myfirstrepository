@@ -14,19 +14,20 @@ namespace Myfirstrepository.Utilities
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, seconds));
 
-            if(locatorType == "XPath")
+            if (locatorType == "XPath")
             {
                 wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath(locatorValue)));
             }
-            if(locatorType == "Id")
+            if (locatorType == "Id")
             {
                 wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Id(locatorValue)));
             }
-            if(locatorType == "CssSelector")
+            if (locatorType == "CssSelector")
             {
-                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath(locatorValue)));
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector(locatorValue)));
             }
-            
+
         }
+
     }
 }

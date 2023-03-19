@@ -15,18 +15,17 @@ namespace Myfirstrepository.Utilities
         public IWebDriver driver;
 
         [SetUp]
-
         public void LoginSteps()
         {
-            driver = new ChromeDriver("E:/Myfirstrepository");
+            driver = new ChromeDriver(@"e:/MyFirstRepository");
 
-            // Login page object initialization and defination
+            // Login page object initialization and definition
             LoginPage loginPageObj = new LoginPage();
             loginPageObj.LoginActions(driver);
         }
 
-        [TearDown]
 
+        [TearDown]
         public void ClosingSteps()
         {
             driver.Quit();

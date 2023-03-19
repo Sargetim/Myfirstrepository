@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Myfirstrepository.Pages
 {
-    public class EmployeePage : CommonDriver 
+    public class EmployeePage : CommonDriver
     {
         public void CreateEmployee(IWebDriver driver)
         {
@@ -20,9 +20,9 @@ namespace Myfirstrepository.Pages
 
         }
 
-        public void DeleteEmployee(IWebDriver driver) 
+        public void DeleteEmployee(IWebDriver driver)
         {
-        
+
         }
     }
 }

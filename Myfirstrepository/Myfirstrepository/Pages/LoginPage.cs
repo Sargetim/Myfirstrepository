@@ -1,10 +1,5 @@
 ﻿using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Myfirstrepository.Pages
@@ -13,7 +8,7 @@ namespace Myfirstrepository.Pages
     {
         public void LoginActions(IWebDriver driver)
         {
-            
+
             driver.Manage().Window.Maximize();
 
             // Launch turnup portal
@@ -26,11 +21,10 @@ namespace Myfirstrepository.Pages
                 IWebElement usernameTextbox = driver.FindElement(By.Id("UserName"));
                 usernameTextbox.SendKeys("hari");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                Assert.Fail("Turnup Portal home page did not work", ex.Message);
+                Assert.Fail("TurnUp portal home page did not launch.", ex.Message);
             }
-
 
             // Identify the password textbox and enter valid password
             IWebElement passwordTextbox = driver.FindElement(By.Id("Password"));
@@ -41,6 +35,5 @@ namespace Myfirstrepository.Pages
             loginButton.Click();
             Thread.Sleep(1500);
         }
-
     }
 }
